@@ -1,0 +1,34 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Покупка</title>
+</head>
+<body>
+    <div>
+        <h3>Форма оформления покупки</h3>
+        <form method="post" action="">
+            <input type="hidden" value="@ViewBag.ProductId" name="ProductId" />
+            <table>
+                <tr>
+                    <td><p>Фамилия </p></td>
+                    <td><input type="text" name="LastName" /> </td>
+                </tr>
+                <tr>
+                    <td><p>Имя </p></td>
+                    <td><input type="text" name="FirstName" /> </td>
+                </tr>
+                <tr>
+                    <td><p>Отчество </p></td>
+                    <td><input type="text" name="MiddleName" /> </td>
+                </tr>
+                <tr><td><input type="submit" value="Отправить" /> </td><td></td></tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
+
+
+

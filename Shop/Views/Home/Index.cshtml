@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <div>
+        <h3>Ассортимент</h3>
+
+        <table>
+            <style>
+                td {
+                    width: 100px;
+                    height: 30px;
+                    border: 1px solid black;
+                    text-align:center
+                   }
+            </style>
+            <tr class="header">
+                <td><p>Товар</p></td>
+                <td><p>Цена</p></td>
+                <td><p>В наличии</p></td>
+            </tr>
+            @foreach (var p in ViewBag.Products)
+            {
+                <tr>
+                    <td><p>@p.ProductType</p></td>
+                    <td><p>@p.Price</p></td>
+                    <td><p>@p.Count</p></td>
+                    <td><p><a href="/Home/Buy/@p.Id">Купить</a></p></td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
