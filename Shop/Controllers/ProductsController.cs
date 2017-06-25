@@ -123,5 +123,51 @@ namespace Shop.Controllers
             }
             base.Dispose(disposing);
         }
+        public ActionResult AddToOrder(int productId)
+        {
+            var order = db.Orders.Include(x => x.OrderPositions).FirstOrDefault();
+
+            if (order == null)
+            {
+                order = new Order
+                {
+                    Customer = new Customer
+                    {
+                        FirstName = "Иванов",
+                        LastName = "Иван",
+                        MiddleName = "Иванович"
+                    },
+                    OrderPositions = new List<OrderPosition>
+                    {
+                        new OrderPosition
+                        {
+                            ProductId = productId,
+                            Count = 1
+                        }
+                    }
+                };
+
+                db.Orders.Add(order);
+            }
+            else
+            {
+                if (order.OrderPositions.Any(x => x.ProductId == productId))
+                {
+                    order.OrderPositions.First(x => x.ProductId == productId).Count++;
+                }
+                else
+                {
+                    order.OrderPositions.Add(new OrderPosition
+                    {
+                        ProductId = productId,
+                        Count = 1
+                    });
+                }
+            }
+
+            db.SaveChanges();
+
+            return Redirect("/Orders/Index");
+        } 
     }
 }

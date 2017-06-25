@@ -1,0 +1,27 @@
+﻿@model Shop.Models.Order
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Ваша корзина</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td>Продукт</td>
+            <td>Цена</td>
+            <td>Количество</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.OrderPositions)
+        {
+            <tr id="@order.Id">
+                <td>@order.Product.ProductType</td>
+                <td>@order.Product.Price</td>
+                <td class="count">@order.Count</td>
+            </tr>
+        }
+    </tbody>
+</table>
