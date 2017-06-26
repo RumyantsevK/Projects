@@ -42,7 +42,6 @@
                     var $orderPosition = $(this).parents('tr');
                     $.get('/Orders/DeleteOrderPosition?orderPositionId=' + $orderPosition[0].id,
                         function (response) {
-                            console.log(response);
                             $orderPosition.remove();
                         });
                 }
