@@ -6,12 +6,67 @@
 
 <h2>Ваша корзина</h2>
 
-<table class="table table-bordered">
-    <thead>
+@section scripts
+{
+    <script>
+
+        function changeCountSpan(step) {
+            var $countSpan = $(this).parents('td').children('span.count')
+            var $price = $(this).parents('tr').children('td.price');
+            var $sum = $(this).parents('tr').children('td.sum');
+            var $totalSum = $('#totalSum');
+
+            var count = $countSpan.text();
+            var price = parseInt($price.text());
+            var totalSum = parseInt($totalSum.text());
+
+            count = parseInt(count) + step;
+            if (count < 0)
+                return;
+
+            if (step == -1) {
+                totalSum -= price;
+            } else {
+                totalSum += price;
+            }
+
+            $countSpan.text(count);
+            $sum.text(count * price);
+            $totalSum.text(totalSum);
+        }
+
+        $('.delete').on("click",
+            function (event) {
+                var check = confirm("Вы действительно хотите удалить товар?");
+                if (check) {
+                    var $orderPosition = $(this).parents('tr');
+                    $.get('/Orders/DeleteOrderPosition?orderPositionId=' + $orderPosition[0].id,
+                        function (response) {
+                            console.log(response);
+                            $orderPosition.remove();
+                        });
+                }
+            });
+
+        $('.plus').on("click",
+            function () {
+                changeCountSpan.call(this, 1)
+            });
+
+        $('.minus').on("click",
+            function () {
+                changeCountSpan.call(this, -1)
+            });
+
+    </script>
+}
+<table class="table table-bordered" style="text-align:center">
+    <thead style="font-weight:bold">
         <tr>
             <td>Продукт</td>
             <td>Цена</td>
             <td>Количество</td>
+            <td>Сумма</td>
         </tr>
     </thead>
     <tbody>
@@ -19,9 +74,19 @@
         {
             <tr id="@order.Id">
                 <td>@order.Product.ProductType</td>
-                <td>@order.Product.Price</td>
-                <td class="count">@order.Count</td>
+                <td class="price">@order.Product.Price</td>
+                <td>
+                    <button class="minus">-</button>
+                    <span class="count">@order.Count</span>
+                    <button class="plus">+</button>
+                </td>
+                <td class="sum">@(order.Product.Price * order.Count)</td>
+                <td><button class="delete">Удалить</button></td>
             </tr>
         }
+        <tr>
+            <td colspan="3">Итоговая сумма</td>
+            <td id="totalSum">@Model.OrderPositions.Sum(x => x.Product.Price * x.Count)</td>
+        </tr>
     </tbody>
 </table>
