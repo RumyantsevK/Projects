@@ -1,0 +1,48 @@
+﻿@model Shop.Models.Customer
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+<h2>Ваши заказы</h2>
+
+@section scripts
+{
+    <script>
+        $('.delete').on("click",
+            function (event) {
+                var check = confirm("Удалить заказ?");
+                if (check) {
+                    console.log();
+                    var $order = $(this).parents('tr');
+                    $.get('/Customers/DeleteOrder?orderId=' + $order[0].id,
+                        function (response) {
+                            //$order.remove();
+                        });
+                }
+            });
+    </script>
+}
+
+<table class="table table-bordered" style="text-align:center">
+    <thead style="font-weight:bold">
+        <tr>
+            <td>ID заказа</td>
+            <td>Сумма заказа</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr id="@order.Id">
+                <td>@order.Id</td>
+                <td>@order.TotalSum</td>
+                <td><button class="delete">Удалить</button></td>
+            </tr>
+        }
+        <tr>
+            <td>Сумма всех заказов</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>

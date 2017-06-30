@@ -30,7 +30,7 @@
             } else {
                 totalSum += price;
             }
-
+            
             $.get('/Orders/OrderPositionCount?orderPositionId=' + $orderPosition[0].id + '&orderPositionCount=' + count,
                 function (response) {
                     $countSpan.text(count);
@@ -61,6 +61,21 @@
                 changeCountSpan.call(this, -1)
             });
 
+        $('.confirm').on("click",
+            function (event) {
+                console.log();
+                var check = confirm("Завершить оформление заказа?")
+                if (check) {
+                    var $orderId = $(this);
+                    var $totalSum = $('#totalSum');
+                    var totalSum = parseInt($totalSum.text());
+                    $.get('/Orders/ConfirmOrder?orderId=' + $orderId[0].id + '&orderTotalSum=' + totalSum,
+                        function (response) {
+                            
+                        });
+                }
+            })
+        
     </script>
 }
 <table class="table table-bordered" style="text-align:center">
@@ -93,3 +108,5 @@
         </tr>
     </tbody>
 </table>
+
+<button id="@Model.Id" class="confirm">Завершить оформление заказа</button>

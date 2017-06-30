@@ -20,6 +20,11 @@ namespace Shop.Controllers
             return View(db.Customers.ToList());
         }
 
+        public ActionResult Orders()
+        {
+            return View(db.Customers.Include(x => x.Orders).FirstOrDefault());
+        }
+
         // GET: Customers/Details/5
         public ActionResult Details(int? id)
         {
@@ -122,6 +127,17 @@ namespace Shop.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public void DeleteOrder(int orderId)
+        {
+            var deleteOrder = db.Orders.Find(orderId);
+
+            if (deleteOrder != null)
+            {
+                db.Orders.Remove(deleteOrder);
+                db.SaveChanges();
+            }
         }
     }
 }

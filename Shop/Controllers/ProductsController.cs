@@ -123,6 +123,7 @@ namespace Shop.Controllers
             }
             base.Dispose(disposing);
         }
+
         public ActionResult AddToOrder(int productId)
         {
             var order = db.Orders.Include(x => x.OrderPositions).FirstOrDefault();
@@ -133,8 +134,8 @@ namespace Shop.Controllers
                 {
                     Customer = new Customer
                     {
-                        FirstName = "Иван",
                         LastName = "Иванов",
+                        FirstName = "Иван",
                         MiddleName = "Иванович"
                     },
                     OrderPositions = new List<OrderPosition>
@@ -142,9 +143,10 @@ namespace Shop.Controllers
                         new OrderPosition
                         {
                             ProductId = productId,
-                            Count = 1
+                            Count = 1,
                         }
-                    }
+                    },
+                    TotalSum = 0
                 };
 
                 db.Orders.Add(order);

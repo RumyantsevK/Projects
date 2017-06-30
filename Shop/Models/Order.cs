@@ -11,5 +11,6 @@ namespace Shop.Models
         public int CustomerID { get; set; }
         public Customer Customer { get; set; }
         public List<OrderPosition> OrderPositions { get; set; }
+        public int TotalSum { get; set; }
     }
 }
