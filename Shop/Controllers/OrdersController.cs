@@ -8,13 +8,8 @@ namespace Shop.Controllers
 {
     public class OrdersController : Controller
     {
-        private ShopContext db;
-
-        public OrdersController()
-        {
-            db = new ShopContext();
-        }
-
+        private ShopContext db = new ShopContext();
+        
         // GET: Orders
         public ActionResult Index()
         {
@@ -22,6 +17,7 @@ namespace Shop.Controllers
         }
 
         [HttpGet]
+
         public void DeleteOrderPosition(int orderPositionId)
         {
             var orderPosition = db.OrderPositions.Find(orderPositionId);
@@ -29,6 +25,18 @@ namespace Shop.Controllers
             if (orderPosition != null)
             {
                 db.OrderPositions.Remove(orderPosition);
+                db.SaveChanges();
+            }
+        }
+        
+        public void OrderPositionCount(int orderPositionId,int orderPositionCount)
+        {
+            var orderPosition = db.OrderPositions.Find(orderPositionId);
+            var _orderPositionCount = db.OrderPositions.Find(orderPositionCount);
+
+            if (orderPosition != null)
+            {
+                orderPosition.Count = orderPositionCount;
                 db.SaveChanges();
             }
         }

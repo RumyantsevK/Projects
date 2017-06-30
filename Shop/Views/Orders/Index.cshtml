@@ -11,6 +11,7 @@
     <script>
 
         function changeCountSpan(step) {
+            var $orderPosition = $(this).parents('tr');
             var $countSpan = $(this).parents('td').children('span.count')
             var $price = $(this).parents('tr').children('td.price');
             var $sum = $(this).parents('tr').children('td.sum');
@@ -30,9 +31,12 @@
                 totalSum += price;
             }
 
-            $countSpan.text(count);
-            $sum.text(count * price);
-            $totalSum.text(totalSum);
+            $.get('/Orders/OrderPositionCount?orderPositionId=' + $orderPosition[0].id + '&orderPositionCount=' + count,
+                function (response) {
+                    $countSpan.text(count);
+                    $sum.text(price * count);
+                    $totalSum.text(totalSum);
+                });
         }
 
         $('.delete').on("click",

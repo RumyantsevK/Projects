@@ -133,8 +133,8 @@ namespace Shop.Controllers
                 {
                     Customer = new Customer
                     {
-                        FirstName = "Иванов",
-                        LastName = "Иван",
+                        FirstName = "Иван",
+                        LastName = "Иванов",
                         MiddleName = "Иванович"
                     },
                     OrderPositions = new List<OrderPosition>
